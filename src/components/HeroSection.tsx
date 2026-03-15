@@ -6,23 +6,22 @@ import gwmP300 from "@/assets/gwm-p300.png";
 import weddingSedans from "@/assets/wedding-sedans.png";
 import citySkyline from "@/assets/city-skyline.png";
 
-const vehicles = [
-  { src: toyotaCoaster, alt: "Toyota Coaster Bus", label: "Toyota Coaster" },
-  { src: gwmP300, alt: "GWM P300 4x4 Pickup", label: "GWM P300 4x4" },
-  { src: weddingSedans, alt: "Luxury Wedding Sedans", label: "Wedding Sedans" },
-];
-
 const HeroSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
   });
 
+  // All animation hooks declared at top level
   const vehicleX = useTransform(scrollYProgress, [0, 1], [0, 80]);
   const skylineY = useTransform(scrollYProgress, [0, 1], [0, 40]);
+  const gwmX = useTransform(scrollYProgress, [0, 1], [0, 50]);
+  const sedanX = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
   const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
@@ -35,18 +34,22 @@ const HeroSection = () => {
       ref={sectionRef}
       id="home"
       className="relative min-h-screen flex items-center overflow-hidden"
-      style={{ background: "linear-gradient(165deg, hsl(224 71% 4%) 0%, hsl(221 60% 12%) 40%, hsl(224 71% 4%) 100%)" }}
+      style={{
+        background:
+          "linear-gradient(165deg, hsl(224 71% 4%) 0%, hsl(221 60% 12%) 40%, hsl(224 71% 4%) 100%)",
+      }}
     >
-      {/* Subtle grid overlay */}
+      {/* Grid overlay */}
       <div
         className="absolute inset-0 opacity-[0.06]"
         style={{
-          backgroundImage: `linear-gradient(hsl(var(--primary) / 0.4) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary) / 0.4) 1px, transparent 1px)`,
+          backgroundImage:
+            "linear-gradient(hsl(var(--primary) / 0.4) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--primary) / 0.4) 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
 
-      {/* City skyline background */}
+      {/* Skyline */}
       <motion.div
         className="absolute bottom-0 left-0 right-0 pointer-events-none"
         style={{ y: skylineY }}
@@ -60,19 +63,19 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-[hsl(224,71%,4%)] via-transparent to-transparent" />
       </motion.div>
 
-      {/* Soft blue ambient glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[300px] rounded-full bg-primary/10 blur-[120px] pointer-events-none" />
+      {/* Ambient glow */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[300px] rounded-full bg-primary/10 blur-[120px]" />
 
-      {/* Content */}
       <div className="relative z-10 section-container pt-28 pb-20 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-          {/* Left: Text */}
+          
+          {/* LEFT CONTENT */}
           <div className="space-y-8">
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="text-accent font-display font-semibold text-sm md:text-base tracking-[0.2em] uppercase"
+              transition={{ delay: 0.2 }}
+              className="text-accent font-semibold text-sm tracking-[0.2em] uppercase"
             >
               Here To Take You There
             </motion.p>
@@ -80,144 +83,133 @@ const HeroSection = () => {
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.7 }}
-              className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-primary-foreground leading-[1.08]"
+              transition={{ delay: 0.4 }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-primary-foreground leading-[1.08]"
             >
-              Reliable
-              <br />
-              Transport{" "}
-              <span className="text-gradient-primary">Services</span>
+              Reliable <br />
+              Transport <span className="text-gradient-primary">Services</span>
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-              className="text-lg md:text-xl text-primary-foreground/50 font-medium tracking-wide"
+              transition={{ delay: 0.6 }}
+              className="text-lg md:text-xl text-primary-foreground/50"
             >
-              Safe &nbsp;•&nbsp; Reliable &nbsp;•&nbsp; Affordable
+              Safe • Reliable • Affordable
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.6 }}
+              transition={{ delay: 0.8 }}
               className="flex flex-wrap gap-4"
             >
               <a
                 href="#booking"
-                className="bg-primary text-primary-foreground px-8 py-4 rounded-xl font-display font-semibold text-base hover:brightness-110 active:scale-[0.97] transition-all duration-200"
+                className="bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:brightness-110"
               >
                 Book a Vehicle
               </a>
+
               <a
                 href="https://wa.me/260772344849"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#25D366] text-primary-foreground px-8 py-4 rounded-xl font-display font-semibold text-base hover:brightness-110 active:scale-[0.97] transition-all duration-200 flex items-center gap-2"
+                className="bg-[#25D366] text-white px-8 py-4 rounded-xl font-semibold flex items-center gap-2"
               >
-                <MessageCircle className="w-5 h-5" /> WhatsApp Booking
+                <MessageCircle className="w-5 h-5" />
+                WhatsApp Booking
               </a>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1, duration: 0.6 }}
-              className="flex flex-wrap gap-6 text-primary-foreground/70 text-sm"
-            >
-              <a href="tel:+260772344849" className="flex items-center gap-2 hover:text-accent transition-colors">
-                <Phone className="w-4 h-4 text-accent" /> 0772 344 849
+            <div className="flex flex-wrap gap-6 text-primary-foreground/70 text-sm">
+              <a
+                href="tel:+260772344849"
+                className="flex items-center gap-2 hover:text-accent"
+              >
+                <Phone className="w-4 h-4 text-accent" />
+                0772 344 849
               </a>
-              <a href="tel:+260760039168" className="flex items-center gap-2 hover:text-accent transition-colors">
-                <Phone className="w-4 h-4 text-accent" /> 0760 039 168
+
+              <a
+                href="tel:+260760039168"
+                className="flex items-center gap-2 hover:text-accent"
+              >
+                <Phone className="w-4 h-4 text-accent" />
+                0760 039 168
               </a>
-            </motion.div>
+            </div>
           </div>
 
-          {/* Right: Vehicle showcase */}
+          {/* RIGHT VEHICLE SECTION */}
           <motion.div
             initial={{ opacity: 0, x: 60 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5, duration: 0.9 }}
-            className="relative flex items-end justify-center min-h-[380px] md:min-h-[500px] lg:min-h-[540px]"
+            transition={{ delay: 0.5 }}
+            className="relative flex items-end justify-center min-h-[380px] md:min-h-[500px]"
           >
             {isMobile ? (
               <div className="relative w-full flex flex-col items-center">
-                {/* Glow under vehicle */}
                 <div className="absolute -bottom-6 w-[70%] h-10 rounded-full bg-primary/20 blur-2xl" />
+
                 <motion.img
                   src={toyotaCoaster}
                   alt="Toyota Coaster Bus"
-                  className="w-[90%] max-w-[400px] relative z-10 drop-shadow-2xl"
+                  className="w-[90%] max-w-[400px]"
                   animate={{ y: [0, -8, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{ duration: 4, repeat: Infinity }}
                 />
-                <span className="mt-4 text-accent font-display font-semibold text-sm tracking-widest uppercase">
+
+                <span className="mt-4 text-accent text-sm uppercase tracking-widest">
                   Toyota Coaster
                 </span>
               </div>
             ) : (
               <div className="relative w-full h-full">
-                {/* Vehicle 1: Toyota Coaster - main, large, front center */}
+                
+                {/* Main Bus */}
                 <motion.div
                   className="absolute bottom-0 left-1/2 -translate-x-1/2 z-30 w-[95%]"
                   style={{ x: vehicleX }}
                 >
-                  <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[70%] h-8 rounded-full bg-primary/25 blur-2xl" />
                   <motion.img
                     src={toyotaCoaster}
                     alt="Toyota Coaster Bus"
-                    className="w-full drop-shadow-[0_20px_60px_rgba(29,78,216,0.3)] relative z-10"
+                    className="w-full"
                     animate={{ y: [0, -6, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    transition={{ duration: 4, repeat: Infinity }}
                   />
-                  <div className="text-center mt-2">
-                    <span className="text-accent/90 font-display font-semibold text-xs tracking-widest uppercase">
-                      Toyota Coaster
-                    </span>
-                  </div>
                 </motion.div>
 
-                {/* Vehicle 2: GWM P300 - back left, smaller */}
+                {/* Pickup */}
                 <motion.div
                   className="absolute bottom-[45%] left-[-5%] z-20 w-[55%]"
-                  style={{ x: useTransform(scrollYProgress, [0, 1], [0, 50]) }}
+                  style={{ x: gwmX }}
                 >
-                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-[60%] h-5 rounded-full bg-primary/15 blur-xl" />
                   <motion.img
                     src={gwmP300}
-                    alt="GWM P300 4x4 Pickup"
-                    className="w-full drop-shadow-[0_15px_40px_rgba(29,78,216,0.2)] relative z-10 opacity-90"
+                    alt="GWM Pickup"
+                    className="w-full opacity-90"
                     animate={{ y: [0, -5, 0] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                    transition={{ duration: 5, repeat: Infinity }}
                   />
-                  <div className="text-center mt-1">
-                    <span className="text-primary-foreground/50 font-display font-medium text-[10px] tracking-widest uppercase">
-                      GWM P300 4x4
-                    </span>
-                  </div>
                 </motion.div>
 
-                {/* Vehicle 3: Wedding Sedans - back right, smaller */}
+                {/* Sedans */}
                 <motion.div
                   className="absolute bottom-[50%] right-[-5%] z-10 w-[50%]"
-                  style={{ x: useTransform(scrollYProgress, [0, 1], [0, 100]) }}
+                  style={{ x: sedanX }}
                 >
-                  <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-[60%] h-5 rounded-full bg-primary/15 blur-xl" />
                   <motion.img
                     src={weddingSedans}
-                    alt="Luxury Wedding Sedans"
-                    className="w-full drop-shadow-[0_15px_40px_rgba(29,78,216,0.2)] relative z-10 opacity-85"
+                    alt="Wedding Sedans"
+                    className="w-full opacity-85"
                     animate={{ y: [0, -4, 0] }}
-                    transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    transition={{ duration: 4.5, repeat: Infinity }}
                   />
-                  <div className="text-center mt-1">
-                    <span className="text-primary-foreground/50 font-display font-medium text-[10px] tracking-widest uppercase">
-                      Wedding Sedans
-                    </span>
-                  </div>
                 </motion.div>
+
               </div>
             )}
           </motion.div>
