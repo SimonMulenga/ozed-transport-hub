@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**: URL: https://simonmulenga.github.io/ozed-transport-hub
+**URL**: URL: https://simonmulenga.github.io/ozed-transport
 
 ## How can I edit this code?
 
@@ -10,7 +10,7 @@ There are several ways of editing your application.
 
 **Use Lovable**
 
-Simply visit the [Ozed Transport](URL: https://simonmulenga.github.io/ozed-transport-hub) and start prompting.
+Simply visit the [Ozed Transport](URL: https://simonmulenga.github.io/ozed-transport) and start prompting.
 
 Changes made via Lovable will be committed automatically to this repo.
 

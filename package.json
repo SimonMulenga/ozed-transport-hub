@@ -2,7 +2,7 @@
   "name": "vite_react_shadcn_ts",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://simonmulenga.github.io/ozed-transport-hub",
+  "homepage": "https://simonmulenga.github.io/ozed-transport",
   "type": "module",
   "scripts": {
     "dev": "vite",
