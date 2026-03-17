@@ -1,12 +1,16 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Send, Calendar, MapPin, Car, Users, Calculator } from "lucide-react";
 
 const VEHICLES = [
   { name: "Toyota Coaster Bus", localPrice: 2500, outsidePrice: 3500 },
-  { name: "Luxury Wedding Sedan (x1)", localPrice: 2500, outsidePrice: 2500 },
+  { name: "Toyota Quantum", localPrice: 2500, outsidePrice: 3000 },
+  { name: "Toyota Vanguard", localPrice: 1200, outsidePrice: 1800 },
+  { name: "Mitsubishi Pajero", localPrice: 2000, outsidePrice: 2500 },
+  { name: "Toyota Fortuner", localPrice: 2000, outsidePrice: 2500 },
+  { name: "Honda Fit", localPrice: 800, outsidePrice: 1200 },
+  { name: "Luxury Wedding Sedan", localPrice: 2500, outsidePrice: 2500 },
   { name: "Wedding Package (3 Vehicles)", localPrice: 7000, outsidePrice: 7000 },
-  { name: "Shuttle / Small Car", localPrice: 2500, outsidePrice: 3500 },
 ];
 
 const BookingSection = () => {
@@ -22,6 +26,16 @@ const BookingSection = () => {
     isOutsideLusaka: false,
   });
   const [sending, setSending] = useState(false);
+
+  // Listen for vehicle pre-selection from fleet cards
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const vehicleName = (e as CustomEvent).detail;
+      setForm((f) => ({ ...f, vehicle: vehicleName }));
+    };
+    window.addEventListener("selectVehicle", handler);
+    return () => window.removeEventListener("selectVehicle", handler);
+  }, []);
 
   const calculation = useMemo(() => {
     if (!form.pickupDate || !form.returnDate || !form.vehicle) return null;
@@ -95,7 +109,6 @@ Please confirm availability.`;
             onSubmit={handleSubmit}
             className="card-premium p-6 md:p-10 space-y-5"
           >
-            {/* Personal */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label className="text-xs font-semibold text-muted-foreground mb-1.5 block">Full Name</label>
@@ -107,7 +120,6 @@ Please confirm availability.`;
               </div>
             </div>
 
-            {/* Locations */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label className="text-xs font-semibold text-muted-foreground mb-1.5 flex items-center gap-1"><MapPin className="w-3 h-3" /> Pickup Location</label>
@@ -119,7 +131,6 @@ Please confirm availability.`;
               </div>
             </div>
 
-            {/* Dates */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label className="text-xs font-semibold text-muted-foreground mb-1.5 flex items-center gap-1"><Calendar className="w-3 h-3" /> Pickup Date</label>
@@ -131,7 +142,6 @@ Please confirm availability.`;
               </div>
             </div>
 
-            {/* Vehicle & Passengers */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label className="text-xs font-semibold text-muted-foreground mb-1.5 flex items-center gap-1"><Car className="w-3 h-3" /> Vehicle Type</label>
@@ -148,7 +158,6 @@ Please confirm availability.`;
               </div>
             </div>
 
-            {/* Outside Lusaka toggle */}
             <label className="flex items-center gap-3 cursor-pointer select-none">
               <input
                 type="checkbox"
@@ -159,7 +168,6 @@ Please confirm availability.`;
               <span className="text-sm text-muted-foreground">Destination is outside Lusaka</span>
             </label>
 
-            {/* Price Calculation Display */}
             {calculation && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
