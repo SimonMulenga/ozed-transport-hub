@@ -1,20 +1,27 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, Users, Shield, Filter } from "lucide-react";
+import { ChevronLeft, ChevronRight, Users, Shield, Filter, Flame } from "lucide-react";
 
 import coasterFront from "@/assets/coaster-front-2.jpg";
 import coasterFleet from "@/assets/coaster-fleet-2.jpg";
 import coasterInterior from "@/assets/coaster-interior-2.jpg";
+import coasterInterior3 from "@/assets/coaster-interior-3.jpg";
 import weddingMercedes from "@/assets/wedding-mercedes-2.jpg";
+import hondaFitExterior from "@/assets/honda-fit-exterior.jpg";
 import hondaFitDashboard from "@/assets/honda-fit-dashboard.jpg";
 import hondaFitFront from "@/assets/honda-fit-front.jpg";
 import hondaFitBack from "@/assets/honda-fit-back.jpg";
 import vanguard from "@/assets/vanguard.jpg";
+import pajeroBlack from "@/assets/pajero-black.jpg";
+import pajeroSilver from "@/assets/pajero-silver.jpg";
+import fortuner from "@/assets/fortuner.jpg";
 import shuttleFront from "@/assets/shuttle-front.jpg";
 import shuttleBack from "@/assets/shuttle-back.jpg";
 import shuttleDashboard from "@/assets/shuttle-dashboard.jpg";
+import toyotaVitz from "@/assets/toyota-vitz.jpg";
+import gwmP300 from "@/assets/gwm-p300.png";
 
-type VehicleCategory = "All" | "Bus" | "SUV" | "Sedan" | "Economy";
+type VehicleCategory = "All" | "Bus" | "SUV" | "Sedan" | "Economy" | "Pickup";
 
 interface Vehicle {
   name: string;
@@ -26,14 +33,15 @@ interface Vehicle {
   features: string[];
   capacity: string;
   bookingName: string;
+  mostBooked?: boolean;
 }
 
 const vehicles: Vehicle[] = [
   {
     name: "Toyota Coaster Bus",
     category: "Bus",
-    images: [coasterFront, coasterFleet, coasterInterior],
-    captions: ["Front Exterior", "Our Fleet", "Spacious Interior"],
+    images: [coasterFront, coasterFleet, coasterInterior, coasterInterior3],
+    captions: ["Front Exterior", "Our Fleet", "Interior Seating", "Spacious Cabin"],
     desc: "Perfect for big groups — weddings, church trips, corporate events, funerals, and out-of-town travel.",
     prices: [
       { label: "Local (Lusaka)", price: "K2,500", perDay: true },
@@ -56,6 +64,21 @@ const vehicles: Vehicle[] = [
     features: ["Air Conditioned", "Comfortable Seating", "Fuel Efficient", "Professional Driver"],
     capacity: "14 Passengers",
     bookingName: "Toyota Quantum",
+    mostBooked: true,
+  },
+  {
+    name: "Toyota Alphard",
+    category: "Sedan",
+    images: [shuttleFront],
+    captions: ["Executive Luxury"],
+    desc: "Executive luxury travel. Arrive in style and travel in comfort for weddings, VIP guests, and corporate events.",
+    prices: [
+      { label: "Local (Lusaka)", price: "K1,500", perDay: true },
+      { label: "Outside Lusaka", price: "K2,000", perDay: true },
+    ],
+    features: ["Executive Interior", "Air Conditioned", "Professional Driver", "Airport Transfers"],
+    capacity: "7 Passengers",
+    bookingName: "Toyota Alphard",
   },
   {
     name: "Toyota Vanguard",
@@ -74,21 +97,22 @@ const vehicles: Vehicle[] = [
   {
     name: "Mitsubishi Pajero",
     category: "SUV",
-    images: [vanguard],
-    captions: ["Exterior"],
-    desc: "Rugged and powerful SUV — ideal for executive travel and long-distance trips.",
+    images: [pajeroBlack, pajeroSilver],
+    captions: ["Black Pajero", "Silver Pajero"],
+    desc: "Executive 4×4 experience. Luxury, power, and command on the road for VIP transfers and corporate travel.",
     prices: [
       { label: "Within Lusaka", price: "K2,000", perDay: true },
       { label: "Outside Lusaka", price: "K2,500", perDay: true },
     ],
-    features: ["4x4 Capable", "Executive Comfort", "Professional Driver", "Long Distance Ready"],
+    features: ["4x4 Capable", "Executive Comfort", "Professional Driver", "Ideal For Long Distance"],
     capacity: "5 Passengers",
     bookingName: "Mitsubishi Pajero",
+    mostBooked: true,
   },
   {
     name: "Toyota Fortuner",
     category: "SUV",
-    images: [vanguard],
+    images: [fortuner],
     captions: ["Exterior"],
     desc: "Premium executive SUV for VIP transport, corporate travel, and special occasions.",
     prices: [
@@ -98,20 +122,47 @@ const vehicles: Vehicle[] = [
     features: ["Executive Class", "Spacious", "Air Conditioned", "Professional Driver"],
     capacity: "7 Passengers",
     bookingName: "Toyota Fortuner",
+    mostBooked: true,
+  },
+  {
+    name: "GWM P300",
+    category: "Pickup",
+    images: [gwmP300],
+    captions: ["Exterior"],
+    desc: "Power. Presence. Performance. Perfect for executive travel, site visits, and long distance trips.",
+    prices: [
+      { label: "Local (Lusaka)", price: "K2,500", perDay: true },
+      { label: "Outside Lusaka", price: "K3,500", perDay: true },
+    ],
+    features: ["4x4 Power", "Air Conditioned", "Professional Driver", "Flexible Bookings"],
+    capacity: "4 Passengers",
+    bookingName: "GWM P300",
   },
   {
     name: "Honda Fit",
     category: "Economy",
-    images: [hondaFitFront, hondaFitDashboard, hondaFitBack],
-    captions: ["Front Interior", "Dashboard", "Rear Seating"],
-    desc: "Budget-friendly and fuel efficient — perfect for small trips, errands, and city travel.",
+    images: [hondaFitExterior, hondaFitFront, hondaFitDashboard, hondaFitBack],
+    captions: ["Exterior", "Front Interior", "Dashboard", "Rear Seating"],
+    desc: "Smart, economical, reliable. Perfect for local movements, small family trips, and town errands.",
     prices: [
-      { label: "Within Lusaka", price: "K800", perDay: true },
-      { label: "Outside Lusaka", price: "K1,200", perDay: true },
+      { label: "Per Day", price: "K600", perDay: true },
+    ],
+    features: ["Fuel Efficient", "Comfortable Interior", "Easy Town Driving", "Min 3 Days Booking"],
+    capacity: "4 Passengers",
+    bookingName: "Honda Fit",
+  },
+  {
+    name: "Toyota Vitz",
+    category: "Economy",
+    images: [toyotaVitz],
+    captions: ["Exterior"],
+    desc: "Compact and reliable for daily transport, airport pickups, and business rounds.",
+    prices: [
+      { label: "Per Day", price: "K600", perDay: true },
     ],
     features: ["Fuel Efficient", "Air Conditioned", "Clean & Comfortable", "Affordable"],
     capacity: "4 Passengers",
-    bookingName: "Honda Fit",
+    bookingName: "Toyota Vitz",
   },
   {
     name: "Wedding Sedans (Mercedes)",
@@ -129,7 +180,7 @@ const vehicles: Vehicle[] = [
   },
 ];
 
-const categories: VehicleCategory[] = ["All", "Bus", "SUV", "Sedan", "Economy"];
+const categories: VehicleCategory[] = ["All", "Bus", "SUV", "Pickup", "Sedan", "Economy"];
 
 const ImageGallery = ({ images, captions, name }: { images: string[]; captions: string[]; name: string }) => {
   const [current, setCurrent] = useState(0);
@@ -140,6 +191,7 @@ const ImageGallery = ({ images, captions, name }: { images: string[]; captions: 
         src={images[current]}
         alt={`${name} - ${captions[current]}`}
         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        loading="lazy"
       />
       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-3">
         <p className="text-white/90 text-xs font-medium">{captions[current]}</p>
@@ -220,9 +272,16 @@ const FleetSection = () => {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="bg-card border border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+              transition={{ delay: i * 0.08 }}
+              className="bg-card border border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 relative"
             >
+              {/* Most Booked Badge */}
+              {v.mostBooked && (
+                <div className="absolute top-3 left-3 z-10 bg-accent text-accent-foreground px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-md">
+                  <Flame className="w-3 h-3" /> Most Booked
+                </div>
+              )}
+
               <ImageGallery images={v.images} captions={v.captions} name={v.name} />
 
               <div className="p-5 space-y-4">
@@ -253,21 +312,18 @@ const FleetSection = () => {
                   ))}
                 </ul>
 
-                <a
-                  href={`#booking?vehicle=${encodeURIComponent(v.bookingName)}`}
-                  onClick={(e) => {
-                    e.preventDefault();
+                <button
+                  onClick={() => {
                     const bookingSection = document.getElementById("booking");
                     if (bookingSection) {
                       bookingSection.scrollIntoView({ behavior: "smooth" });
-                      // Dispatch custom event to pre-select vehicle
                       window.dispatchEvent(new CustomEvent("selectVehicle", { detail: v.bookingName }));
                     }
                   }}
-                  className="block text-center bg-primary text-primary-foreground py-3 rounded-xl font-semibold text-sm btn-glow hover:scale-[1.02] active:scale-[0.98] transition-transform"
+                  className="w-full text-center bg-primary text-primary-foreground py-3 rounded-xl font-semibold text-sm btn-glow hover:scale-[1.02] active:scale-[0.98] transition-transform"
                 >
                   Book This Vehicle
-                </a>
+                </button>
               </div>
             </motion.div>
           ))}

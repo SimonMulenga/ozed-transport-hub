@@ -5,10 +5,13 @@ import { Send, Calendar, MapPin, Car, Users, Calculator } from "lucide-react";
 const VEHICLES = [
   { name: "Toyota Coaster Bus", localPrice: 2500, outsidePrice: 3500 },
   { name: "Toyota Quantum", localPrice: 2500, outsidePrice: 3000 },
+  { name: "Toyota Alphard", localPrice: 1500, outsidePrice: 2000 },
   { name: "Toyota Vanguard", localPrice: 1200, outsidePrice: 1800 },
   { name: "Mitsubishi Pajero", localPrice: 2000, outsidePrice: 2500 },
   { name: "Toyota Fortuner", localPrice: 2000, outsidePrice: 2500 },
-  { name: "Honda Fit", localPrice: 800, outsidePrice: 1200 },
+  { name: "GWM P300", localPrice: 2500, outsidePrice: 3500 },
+  { name: "Honda Fit", localPrice: 600, outsidePrice: 600 },
+  { name: "Toyota Vitz", localPrice: 600, outsidePrice: 600 },
   { name: "Luxury Wedding Sedan", localPrice: 2500, outsidePrice: 2500 },
   { name: "Wedding Package (3 Vehicles)", localPrice: 7000, outsidePrice: 7000 },
 ];
@@ -26,12 +29,14 @@ const BookingSection = () => {
     isOutsideLusaka: false,
   });
   const [sending, setSending] = useState(false);
+  const [highlighted, setHighlighted] = useState(false);
 
-  // Listen for vehicle pre-selection from fleet cards
   useEffect(() => {
     const handler = (e: Event) => {
       const vehicleName = (e as CustomEvent).detail;
       setForm((f) => ({ ...f, vehicle: vehicleName }));
+      setHighlighted(true);
+      setTimeout(() => setHighlighted(false), 2000);
     };
     window.addEventListener("selectVehicle", handler);
     return () => window.removeEventListener("selectVehicle", handler);
@@ -54,10 +59,8 @@ const BookingSection = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
-
     const totalDays = calculation ? `${calculation.days} day${calculation.days > 1 ? "s" : ""}` : "N/A";
     const estimatedPrice = calculation ? `K${calculation.total.toLocaleString()}` : "To be confirmed";
-
     const msg = `Hello, I would like to book a vehicle:
 
 Vehicle: ${form.vehicle}
@@ -73,7 +76,6 @@ Name: ${form.name}
 Phone: ${form.phone}
 
 Please confirm availability.`;
-
     setTimeout(() => {
       window.open(`https://wa.me/260772344849?text=${encodeURIComponent(msg)}`, "_blank");
       setSending(false);
@@ -81,22 +83,15 @@ Please confirm availability.`;
   };
 
   const set = (key: string, value: string | boolean) => setForm((f) => ({ ...f, [key]: value }));
-
   const inputClass =
     "w-full bg-muted border border-border rounded-xl px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-shadow";
-
   const today = new Date().toISOString().split("T")[0];
 
   return (
     <section id="booking" className="section-padding bg-background">
       <div className="section-container">
         <div className="max-w-3xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
             <p className="text-accent font-display font-semibold text-sm tracking-widest uppercase mb-3">Reserve Your Ride</p>
             <h2 className="font-display text-3xl md:text-5xl font-bold tracking-tight text-foreground">Book a Vehicle</h2>
             <p className="text-muted-foreground mt-4 max-w-lg mx-auto">Fill in your details and get an instant price estimate. Booking is confirmed via WhatsApp.</p>
@@ -107,7 +102,7 @@ Please confirm availability.`;
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             onSubmit={handleSubmit}
-            className="card-premium p-6 md:p-10 space-y-5"
+            className={`card-premium p-6 md:p-10 space-y-5 transition-all duration-500 ${highlighted ? "ring-2 ring-accent shadow-2xl" : ""}`}
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
@@ -145,7 +140,7 @@ Please confirm availability.`;
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label className="text-xs font-semibold text-muted-foreground mb-1.5 flex items-center gap-1"><Car className="w-3 h-3" /> Vehicle Type</label>
-                <select className={inputClass} required value={form.vehicle} onChange={(e) => set("vehicle", e.target.value)}>
+                <select className={`${inputClass} ${highlighted ? "ring-2 ring-accent" : ""}`} required value={form.vehicle} onChange={(e) => set("vehicle", e.target.value)}>
                   <option value="">Select Vehicle</option>
                   {VEHICLES.map((v) => (
                     <option key={v.name} value={v.name}>{v.name}</option>
@@ -159,21 +154,12 @@ Please confirm availability.`;
             </div>
 
             <label className="flex items-center gap-3 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={form.isOutsideLusaka}
-                onChange={(e) => set("isOutsideLusaka", e.target.checked)}
-                className="w-4 h-4 rounded border-border text-primary focus:ring-primary/40"
-              />
+              <input type="checkbox" checked={form.isOutsideLusaka} onChange={(e) => set("isOutsideLusaka", e.target.checked)} className="w-4 h-4 rounded border-border text-primary focus:ring-primary/40" />
               <span className="text-sm text-muted-foreground">Destination is outside Lusaka</span>
             </label>
 
             {calculation && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                className="bg-primary/5 border border-primary/15 rounded-xl p-5 space-y-3"
-              >
+              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="bg-primary/5 border border-primary/15 rounded-xl p-5 space-y-3">
                 <div className="flex items-center gap-2 text-primary font-display font-semibold">
                   <Calculator className="w-4 h-4" /> Price Estimate
                 </div>
