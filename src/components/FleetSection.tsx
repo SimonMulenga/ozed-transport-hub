@@ -2,18 +2,37 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Users, Shield, Filter, Flame } from "lucide-react";
 
+// Toyota Coaster Bus
 import coasterFront from "@/assets/coaster-front-2.jpg";
 import coasterFleet from "@/assets/coaster-fleet-2.jpg";
 import coasterInteriorReal from "@/assets/coaster-interior-real.jpg";
-import quantumReal from "@/assets/quantum-real.jpg";
-import vanguard from "@/assets/vanguard.jpg";
+
+// Toyota Quantum (actual Quantum van images)
+import quantumSide from "@/assets/quantum-real.jpg";
+import quantumFront from "@/assets/quantum-front.jpg";
+
+// Toyota Vanguard (white SUV)
+import vanguardWhite from "@/assets/vanguard-white.jpg";
+
+// Mitsubishi Pajero (silver SUV)
 import pajeroReal from "@/assets/pajero-real.jpg";
+
+// Toyota Fortuner (silver SUV)
 import fortunerSilver from "@/assets/fortuner-silver.jpg";
+
+// GWM P300 Pickup
+import gwmP300 from "@/assets/gwm-p300.png";
+
+// Honda Fit (blue hatchback)
 import hondaFitBlue from "@/assets/honda-fit-blue.jpg";
 import hondaFitInterior from "@/assets/honda-fit-interior.jpg";
 import hondaFitInteriorSide from "@/assets/honda-fit-interior-side.jpg";
-import gwmP300 from "@/assets/gwm-p300.png";
-import weddingMercedes from "@/assets/wedding-mercedes-2.jpg";
+import hondaFitDashboard from "@/assets/honda-fit-dashboard-real.jpg";
+
+// Wedding Mercedes (3 white Mercedes sedans)
+import mercedesWedding from "@/assets/mercedes-wedding-real.jpg";
+
+// Logo
 import logoNew from "@/assets/logo-new.jpg";
 
 type VehicleCategory = "All" | "Bus" | "SUV" | "Sedan" | "Economy" | "Pickup";
@@ -49,8 +68,8 @@ const vehicles: Vehicle[] = [
   {
     name: "Toyota Quantum",
     category: "Bus",
-    images: [quantumReal],
-    captions: ["Exterior"],
+    images: [quantumSide, quantumFront],
+    captions: ["Side View", "Front View"],
     desc: "Ideal for medium groups — airport transfers, team transport, and family trips.",
     prices: [
       { label: "Within Lusaka", price: "K2,500", perDay: true },
@@ -64,7 +83,7 @@ const vehicles: Vehicle[] = [
   {
     name: "Toyota Vanguard",
     category: "SUV",
-    images: [vanguard],
+    images: [vanguardWhite],
     captions: ["Exterior"],
     desc: "Executive family SUV. Comfort, class, confidence — perfect for family trips, airport transfers, and corporate travel.",
     prices: [
@@ -122,8 +141,8 @@ const vehicles: Vehicle[] = [
   {
     name: "Honda Fit",
     category: "Economy",
-    images: [hondaFitBlue, hondaFitInterior, hondaFitInteriorSide],
-    captions: ["Exterior", "Front Interior", "Interior Side View"],
+    images: [hondaFitBlue, hondaFitInterior, hondaFitInteriorSide, hondaFitDashboard],
+    captions: ["Exterior", "Front Interior", "Interior Side", "Dashboard"],
     desc: "Smart, economical, reliable. Perfect for local movements, small family trips, and town errands.",
     prices: [
       { label: "Per Day", price: "K600", perDay: true },
@@ -135,8 +154,8 @@ const vehicles: Vehicle[] = [
   {
     name: "Wedding Sedans (Mercedes)",
     category: "Sedan",
-    images: [weddingMercedes],
-    captions: ["Mercedes-Benz Fleet"],
+    images: [mercedesWedding],
+    captions: ["3x Mercedes-Benz C-Class"],
     desc: "Arrive in style. Elegant Mercedes-Benz sedans for bridal teams, VIP guests, and photo sessions.",
     prices: [
       { label: "Per Vehicle", price: "K2,500", perDay: false },
@@ -202,7 +221,6 @@ const FleetSection = () => {
   return (
     <section id="fleet" className="section-padding bg-muted/50">
       <div className="section-container">
-        {/* Logo favicon */}
         <div className="flex justify-center mb-6">
           <img src={logoNew} alt="Ozed Transport" className="h-16 w-16 rounded-full object-cover shadow-lg border-2 border-accent" />
         </div>
@@ -218,7 +236,6 @@ const FleetSection = () => {
           <p className="text-muted-foreground mt-4 max-w-xl mx-auto">Real vehicles. Real comfort. Browse our full fleet and book your ride today.</p>
         </motion.div>
 
-        {/* Filter */}
         <div className="flex flex-wrap justify-center gap-2 mb-10">
           {categories.map((cat) => (
             <button
@@ -236,7 +253,6 @@ const FleetSection = () => {
           ))}
         </div>
 
-        {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filtered.map((v, i) => (
             <motion.div

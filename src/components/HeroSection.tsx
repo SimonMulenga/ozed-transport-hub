@@ -2,22 +2,23 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, MessageCircle, ChevronLeft, ChevronRight, Flame } from "lucide-react";
 
-import pajeroReal from "@/assets/pajero-real.jpg";
-import vanguard from "@/assets/vanguard.jpg";
-import fortunerSilver from "@/assets/fortuner-silver.jpg";
-import hondaFitBlue from "@/assets/honda-fit-blue.jpg";
-import coasterFront from "@/assets/coaster-front-2.jpg";
-import quantumReal from "@/assets/quantum-real.jpg";
-import gwmP300 from "@/assets/gwm-p300.png";
+// Actual vehicle photos — each matched to the correct car
+import pajeroReal from "@/assets/pajero-real.jpg";          // Silver Mitsubishi Pajero
+import vanguardWhite from "@/assets/vanguard-white.jpg";    // White Toyota Vanguard
+import fortunerSilver from "@/assets/fortuner-silver.jpg";  // Silver Toyota Fortuner
+import hondaFitBlue from "@/assets/honda-fit-blue.jpg";     // Blue Honda Fit
+import coasterFront from "@/assets/coaster-front-2.jpg";    // Toyota Coaster bus
+import quantumSide from "@/assets/quantum-real.jpg";         // Toyota Quantum van
+import mercedesWedding from "@/assets/mercedes-wedding-real.jpg"; // 3 white Mercedes
 
 const slides = [
+  { image: coasterFront, alt: "Toyota Coaster Bus" },
+  { image: quantumSide, alt: "Toyota Quantum" },
+  { image: vanguardWhite, alt: "Toyota Vanguard" },
   { image: pajeroReal, alt: "Mitsubishi Pajero" },
-  { image: vanguard, alt: "Toyota Vanguard" },
   { image: fortunerSilver, alt: "Toyota Fortuner" },
   { image: hondaFitBlue, alt: "Honda Fit" },
-  { image: coasterFront, alt: "Toyota Coaster Bus" },
-  { image: quantumReal, alt: "Toyota Quantum" },
-  { image: gwmP300, alt: "GWM P300 Pickup" },
+  { image: mercedesWedding, alt: "Wedding Mercedes Sedans" },
 ];
 
 const HeroSection = () => {
@@ -52,7 +53,6 @@ const HeroSection = () => {
         setTouchStart(null);
       }}
     >
-      {/* Background Carousel */}
       <AnimatePresence mode="popLayout" custom={direction}>
         <motion.img
           key={current}
@@ -67,11 +67,21 @@ const HeroSection = () => {
         />
       </AnimatePresence>
 
-      {/* Overlays */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
 
-      {/* Badge */}
+      {/* Current vehicle label */}
+      <div className="absolute top-24 left-4 md:left-8 z-20">
+        <motion.div
+          key={slides[current].alt}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full text-xs md:text-sm font-medium"
+        >
+          {slides[current].alt}
+        </motion.div>
+      </div>
+
       <div className="absolute top-24 right-4 md:right-8 z-20">
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
@@ -84,7 +94,6 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* Nav arrows */}
       <button
         onClick={prev}
         className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black/60 transition-colors"
@@ -98,7 +107,6 @@ const HeroSection = () => {
         <ChevronRight className="w-5 h-5" />
       </button>
 
-      {/* Indicators */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
         {slides.map((_, idx) => (
           <button
@@ -109,67 +117,26 @@ const HeroSection = () => {
         ))}
       </div>
 
-      {/* Content */}
       <div className="relative z-10 section-container pt-28 pb-20 w-full">
         <div className="max-w-2xl space-y-8">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-accent font-semibold text-sm tracking-[0.2em] uppercase"
-          >
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-accent font-semibold text-sm tracking-[0.2em] uppercase">
             Here To Take You There
           </motion.p>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.08]"
-          >
-            Reliable <br />
-            Transport <span className="text-gradient-primary">Services</span>
+          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.08]">
+            Reliable <br />Transport <span className="text-gradient-primary">Services</span>
           </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="text-lg md:text-xl text-white/60"
-          >
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="text-lg md:text-xl text-white/60">
             Safe • Reliable • Affordable
           </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-            className="flex flex-wrap gap-4"
-          >
-            <a
-              href="#booking"
-              className="bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:brightness-110 transition-all"
-            >
-              Book a Vehicle
-            </a>
-            <a
-              href="https://wa.me/260772344849"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#25D366] text-white px-8 py-4 rounded-xl font-semibold flex items-center gap-2 hover:brightness-110 transition-all"
-            >
-              <MessageCircle className="w-5 h-5" />
-              WhatsApp Booking
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }} className="flex flex-wrap gap-4">
+            <a href="#booking" className="bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:brightness-110 transition-all">Book a Vehicle</a>
+            <a href="https://wa.me/260772344849" target="_blank" rel="noopener noreferrer" className="bg-[#25D366] text-white px-8 py-4 rounded-xl font-semibold flex items-center gap-2 hover:brightness-110 transition-all">
+              <MessageCircle className="w-5 h-5" />WhatsApp Booking
             </a>
           </motion.div>
-
           <div className="flex flex-wrap gap-6 text-white/70 text-sm">
-            <a href="tel:+260772344849" className="flex items-center gap-2 hover:text-accent transition-colors">
-              <Phone className="w-4 h-4 text-accent" /> 0772 344 849
-            </a>
-            <a href="tel:+260760039168" className="flex items-center gap-2 hover:text-accent transition-colors">
-              <Phone className="w-4 h-4 text-accent" /> 0760 039 168
-            </a>
+            <a href="tel:+260772344849" className="flex items-center gap-2 hover:text-accent transition-colors"><Phone className="w-4 h-4 text-accent" /> 0772 344 849</a>
+            <a href="tel:+260760039168" className="flex items-center gap-2 hover:text-accent transition-colors"><Phone className="w-4 h-4 text-accent" /> 0760 039 168</a>
           </div>
         </div>
       </div>
