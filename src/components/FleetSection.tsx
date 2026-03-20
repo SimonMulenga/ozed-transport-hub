@@ -4,22 +4,17 @@ import { ChevronLeft, ChevronRight, Users, Shield, Filter, Flame } from "lucide-
 
 import coasterFront from "@/assets/coaster-front-2.jpg";
 import coasterFleet from "@/assets/coaster-fleet-2.jpg";
-import coasterInterior from "@/assets/coaster-interior-2.jpg";
-import coasterInterior3 from "@/assets/coaster-interior-3.jpg";
-import weddingMercedes from "@/assets/wedding-mercedes-2.jpg";
-import hondaFitExterior from "@/assets/honda-fit-exterior.jpg";
-import hondaFitDashboard from "@/assets/honda-fit-dashboard.jpg";
-import hondaFitFront from "@/assets/honda-fit-front.jpg";
-import hondaFitBack from "@/assets/honda-fit-back.jpg";
+import coasterInteriorReal from "@/assets/coaster-interior-real.jpg";
+import quantumReal from "@/assets/quantum-real.jpg";
 import vanguard from "@/assets/vanguard.jpg";
-import pajeroBlack from "@/assets/pajero-black.jpg";
-import pajeroSilver from "@/assets/pajero-silver.jpg";
-import fortuner from "@/assets/fortuner.jpg";
-import shuttleFront from "@/assets/shuttle-front.jpg";
-import shuttleBack from "@/assets/shuttle-back.jpg";
-import shuttleDashboard from "@/assets/shuttle-dashboard.jpg";
-import toyotaVitz from "@/assets/toyota-vitz.jpg";
+import pajeroReal from "@/assets/pajero-real.jpg";
+import fortunerSilver from "@/assets/fortuner-silver.jpg";
+import hondaFitBlue from "@/assets/honda-fit-blue.jpg";
+import hondaFitInterior from "@/assets/honda-fit-interior.jpg";
+import hondaFitInteriorSide from "@/assets/honda-fit-interior-side.jpg";
 import gwmP300 from "@/assets/gwm-p300.png";
+import weddingMercedes from "@/assets/wedding-mercedes-2.jpg";
+import logoNew from "@/assets/logo-new.jpg";
 
 type VehicleCategory = "All" | "Bus" | "SUV" | "Sedan" | "Economy" | "Pickup";
 
@@ -40,8 +35,8 @@ const vehicles: Vehicle[] = [
   {
     name: "Toyota Coaster Bus",
     category: "Bus",
-    images: [coasterFront, coasterFleet, coasterInterior, coasterInterior3],
-    captions: ["Front Exterior", "Our Fleet", "Interior Seating", "Spacious Cabin"],
+    images: [coasterFront, coasterFleet, coasterInteriorReal],
+    captions: ["Front Exterior", "Our Fleet", "Interior Seating"],
     desc: "Perfect for big groups — weddings, church trips, corporate events, funerals, and out-of-town travel.",
     prices: [
       { label: "Local (Lusaka)", price: "K2,500", perDay: true },
@@ -54,8 +49,8 @@ const vehicles: Vehicle[] = [
   {
     name: "Toyota Quantum",
     category: "Bus",
-    images: [shuttleFront, shuttleDashboard, shuttleBack],
-    captions: ["Exterior", "Dashboard", "Interior"],
+    images: [quantumReal],
+    captions: ["Exterior"],
     desc: "Ideal for medium groups — airport transfers, team transport, and family trips.",
     prices: [
       { label: "Within Lusaka", price: "K2,500", perDay: true },
@@ -67,38 +62,24 @@ const vehicles: Vehicle[] = [
     mostBooked: true,
   },
   {
-    name: "Toyota Alphard",
-    category: "Sedan",
-    images: [shuttleFront],
-    captions: ["Executive Luxury"],
-    desc: "Executive luxury travel. Arrive in style and travel in comfort for weddings, VIP guests, and corporate events.",
-    prices: [
-      { label: "Local (Lusaka)", price: "K1,500", perDay: true },
-      { label: "Outside Lusaka", price: "K2,000", perDay: true },
-    ],
-    features: ["Executive Interior", "Air Conditioned", "Professional Driver", "Airport Transfers"],
-    capacity: "7 Passengers",
-    bookingName: "Toyota Alphard",
-  },
-  {
     name: "Toyota Vanguard",
     category: "SUV",
     images: [vanguard],
     captions: ["Exterior"],
-    desc: "Comfortable SUV for business travel, city transfers, and personal trips.",
+    desc: "Executive family SUV. Comfort, class, confidence — perfect for family trips, airport transfers, and corporate travel.",
     prices: [
       { label: "Within Lusaka", price: "K1,200", perDay: true },
       { label: "Outside Lusaka", price: "K1,800", perDay: true },
     ],
-    features: ["Spacious Interior", "Air Conditioned", "Fuel Efficient", "Flexible Bookings"],
+    features: ["Spacious & Comfortable", "Air Conditioned", "Professional Driver", "Ideal For Long Distance"],
     capacity: "5 Passengers",
     bookingName: "Toyota Vanguard",
   },
   {
     name: "Mitsubishi Pajero",
     category: "SUV",
-    images: [pajeroBlack, pajeroSilver],
-    captions: ["Black Pajero", "Silver Pajero"],
+    images: [pajeroReal],
+    captions: ["Silver Pajero"],
     desc: "Executive 4×4 experience. Luxury, power, and command on the road for VIP transfers and corporate travel.",
     prices: [
       { label: "Within Lusaka", price: "K2,000", perDay: true },
@@ -112,7 +93,7 @@ const vehicles: Vehicle[] = [
   {
     name: "Toyota Fortuner",
     category: "SUV",
-    images: [fortuner],
+    images: [fortunerSilver],
     captions: ["Exterior"],
     desc: "Premium executive SUV for VIP transport, corporate travel, and special occasions.",
     prices: [
@@ -141,8 +122,8 @@ const vehicles: Vehicle[] = [
   {
     name: "Honda Fit",
     category: "Economy",
-    images: [hondaFitExterior, hondaFitFront, hondaFitDashboard, hondaFitBack],
-    captions: ["Exterior", "Front Interior", "Dashboard", "Rear Seating"],
+    images: [hondaFitBlue, hondaFitInterior, hondaFitInteriorSide],
+    captions: ["Exterior", "Front Interior", "Interior Side View"],
     desc: "Smart, economical, reliable. Perfect for local movements, small family trips, and town errands.",
     prices: [
       { label: "Per Day", price: "K600", perDay: true },
@@ -150,19 +131,6 @@ const vehicles: Vehicle[] = [
     features: ["Fuel Efficient", "Comfortable Interior", "Easy Town Driving", "Min 3 Days Booking"],
     capacity: "4 Passengers",
     bookingName: "Honda Fit",
-  },
-  {
-    name: "Toyota Vitz",
-    category: "Economy",
-    images: [toyotaVitz],
-    captions: ["Exterior"],
-    desc: "Compact and reliable for daily transport, airport pickups, and business rounds.",
-    prices: [
-      { label: "Per Day", price: "K600", perDay: true },
-    ],
-    features: ["Fuel Efficient", "Air Conditioned", "Clean & Comfortable", "Affordable"],
-    capacity: "4 Passengers",
-    bookingName: "Toyota Vitz",
   },
   {
     name: "Wedding Sedans (Mercedes)",
@@ -229,12 +197,16 @@ const ImageGallery = ({ images, captions, name }: { images: string[]; captions: 
 
 const FleetSection = () => {
   const [activeFilter, setActiveFilter] = useState<VehicleCategory>("All");
-
   const filtered = activeFilter === "All" ? vehicles : vehicles.filter((v) => v.category === activeFilter);
 
   return (
     <section id="fleet" className="section-padding bg-muted/50">
       <div className="section-container">
+        {/* Logo favicon */}
+        <div className="flex justify-center mb-6">
+          <img src={logoNew} alt="Ozed Transport" className="h-16 w-16 rounded-full object-cover shadow-lg border-2 border-accent" />
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -275,7 +247,6 @@ const FleetSection = () => {
               transition={{ delay: i * 0.08 }}
               className="bg-card border border-border rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 relative"
             >
-              {/* Most Booked Badge */}
               {v.mostBooked && (
                 <div className="absolute top-3 left-3 z-10 bg-accent text-accent-foreground px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-md">
                   <Flame className="w-3 h-3" /> Most Booked
