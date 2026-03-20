@@ -2,27 +2,28 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, MessageCircle, ChevronLeft, ChevronRight, Flame } from "lucide-react";
 
-import flyerPajero from "@/assets/flyer-pajero.jpg";
-import flyerGwm from "@/assets/flyer-gwm.jpg";
-import flyerHondafit from "@/assets/flyer-hondafit.jpg";
-import flyerAlphard from "@/assets/flyer-alphard.jpg";
-import coasterFront from "@/assets/coaster-front-2.jpg";
-import shuttleFront from "@/assets/shuttle-front.jpg";
+import pajeroReal from "@/assets/pajero-real.jpg";
 import vanguard from "@/assets/vanguard.jpg";
+import fortunerSilver from "@/assets/fortuner-silver.jpg";
+import hondaFitBlue from "@/assets/honda-fit-blue.jpg";
+import coasterFront from "@/assets/coaster-front-2.jpg";
+import quantumReal from "@/assets/quantum-real.jpg";
+import gwmP300 from "@/assets/gwm-p300.png";
 
 const slides = [
-  { image: flyerPajero, alt: "Mitsubishi Pajero" },
-  { image: flyerGwm, alt: "GWM P300" },
-  { image: flyerHondafit, alt: "Honda Fit" },
-  { image: flyerAlphard, alt: "Toyota Alphard" },
-  { image: coasterFront, alt: "Toyota Coaster Bus" },
-  { image: shuttleFront, alt: "Toyota Quantum" },
+  { image: pajeroReal, alt: "Mitsubishi Pajero" },
   { image: vanguard, alt: "Toyota Vanguard" },
+  { image: fortunerSilver, alt: "Toyota Fortuner" },
+  { image: hondaFitBlue, alt: "Honda Fit" },
+  { image: coasterFront, alt: "Toyota Coaster Bus" },
+  { image: quantumReal, alt: "Toyota Quantum" },
+  { image: gwmP300, alt: "GWM P300 Pickup" },
 ];
 
 const HeroSection = () => {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
 
   const next = useCallback(() => {
     setDirection(1);
@@ -39,13 +40,17 @@ const HeroSection = () => {
     return () => clearInterval(timer);
   }, [next]);
 
-  // Swipe support
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-
   return (
     <section
       id="home"
       className="relative min-h-screen flex items-center overflow-hidden"
+      onTouchStart={(e) => setTouchStart(e.touches[0].clientX)}
+      onTouchEnd={(e) => {
+        if (touchStart === null) return;
+        const diff = touchStart - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 50) diff > 0 ? next() : prev();
+        setTouchStart(null);
+      }}
     >
       {/* Background Carousel */}
       <AnimatePresence mode="popLayout" custom={direction}>
@@ -62,7 +67,7 @@ const HeroSection = () => {
         />
       </AnimatePresence>
 
-      {/* Dark overlay for text readability */}
+      {/* Overlays */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
 
@@ -79,7 +84,7 @@ const HeroSection = () => {
         </motion.div>
       </div>
 
-      {/* Navigation arrows */}
+      {/* Nav arrows */}
       <button
         onClick={prev}
         className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 backdrop-blur-sm text-white flex items-center justify-center hover:bg-black/60 transition-colors"
@@ -93,7 +98,7 @@ const HeroSection = () => {
         <ChevronRight className="w-5 h-5" />
       </button>
 
-      {/* Slide indicators */}
+      {/* Indicators */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
         {slides.map((_, idx) => (
           <button
@@ -104,17 +109,8 @@ const HeroSection = () => {
         ))}
       </div>
 
-      {/* Content overlay */}
-      <div
-        className="relative z-10 section-container pt-28 pb-20 w-full"
-        onTouchStart={(e) => setTouchStart(e.touches[0].clientX)}
-        onTouchEnd={(e) => {
-          if (touchStart === null) return;
-          const diff = touchStart - e.changedTouches[0].clientX;
-          if (Math.abs(diff) > 50) diff > 0 ? next() : prev();
-          setTouchStart(null);
-        }}
-      >
+      {/* Content */}
+      <div className="relative z-10 section-container pt-28 pb-20 w-full">
         <div className="max-w-2xl space-y-8">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
