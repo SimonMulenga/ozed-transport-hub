@@ -4,14 +4,16 @@ import { Send, Calendar, MapPin, Car, Users, Calculator } from "lucide-react";
 
 const VEHICLES = [
   { name: "Toyota Coaster Bus", localPrice: 2500, outsidePrice: 3500 },
-  { name: "Toyota Quantum", localPrice: 2500, outsidePrice: 3000 },
-  { name: "Toyota Alphard", localPrice: 1500, outsidePrice: 2000 },
+  { name: "Toyota Vellfire", localPrice: 2500, outsidePrice: 3000 },
   { name: "Toyota Vanguard", localPrice: 1200, outsidePrice: 1800 },
   { name: "Mitsubishi Pajero", localPrice: 2000, outsidePrice: 2500 },
   { name: "Toyota Fortuner", localPrice: 2000, outsidePrice: 2500 },
-  { name: "GWM P300", localPrice: 2500, outsidePrice: 3500 },
+  { name: "Toyota Hilux", localPrice: 2500, outsidePrice: 3500 },
+  { name: "Lexus LX", localPrice: 3000, outsidePrice: 4000 },
+  { name: "Toyota Land Cruiser Prado", localPrice: 2500, outsidePrice: 3500 },
+  { name: "Toyota Mark X", localPrice: 1000, outsidePrice: 1500 },
   { name: "Honda Fit", localPrice: 600, outsidePrice: 600 },
-  { name: "Toyota Vitz", localPrice: 600, outsidePrice: 600 },
+  { name: "Toyota Vitz", localPrice: 500, outsidePrice: 500 },
   { name: "Luxury Wedding Sedan", localPrice: 2500, outsidePrice: 2500 },
   { name: "Wedding Package (3 Vehicles)", localPrice: 7000, outsidePrice: 7000 },
 ];
