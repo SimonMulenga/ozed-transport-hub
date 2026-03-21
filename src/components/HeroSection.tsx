@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Phone, MessageCircle, ChevronLeft, ChevronRight, Flame } from "lucide-react";
 
 // Actual vehicle photos — each matched to the correct car
-import pajeroReal from "@/assets/pajero-real.jpg";          // Silver Mitsubishi Pajero
+import pajeroSilver from "@/assets/pajero-silver.jpg";      // Silver Mitsubishi Pajero
 import vanguardWhite from "@/assets/vanguard-white.jpg";    // White Toyota Vanguard
 import fortunerSilver from "@/assets/fortuner-silver.jpg";  // Silver Toyota Fortuner
 import hondaFitBlue from "@/assets/honda-fit-blue.jpg";     // Blue Honda Fit
@@ -15,7 +15,7 @@ const slides = [
   { image: coasterFront, alt: "Toyota Coaster Bus" },
   { image: quantumSide, alt: "Toyota Quantum" },
   { image: vanguardWhite, alt: "Toyota Vanguard" },
-  { image: pajeroReal, alt: "Mitsubishi Pajero" },
+  { image: pajeroSilver, alt: "Mitsubishi Pajero" },
   { image: fortunerSilver, alt: "Toyota Fortuner" },
   { image: hondaFitBlue, alt: "Honda Fit" },
   { image: mercedesWedding, alt: "Wedding Mercedes Sedans" },
