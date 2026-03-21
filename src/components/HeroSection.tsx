@@ -8,15 +8,21 @@ import vanguardWhite from "@/assets/vanguard-white.jpg";    // White Toyota Vang
 import fortunerSilver from "@/assets/fortuner-silver.jpg";  // Silver Toyota Fortuner
 import hondaFitBlue from "@/assets/honda-fit-blue.jpg";     // Blue Honda Fit
 import coasterFront from "@/assets/coaster-front-2.jpg";    // Toyota Coaster bus
-import quantumSide from "@/assets/quantum-real.jpg";         // Toyota Quantum van
+import vellfileSilver from "@/assets/vellfire-silver.jpg";   // Toyota Vellfire
 import mercedesWedding from "@/assets/mercedes-wedding-real.jpg"; // 3 white Mercedes
+import lexusLx from "@/assets/lexus-lx.jpg";                // Lexus LX
+import hiluxWhite from "@/assets/hilux-white.jpg";          // Toyota Hilux
+import pradoWhite from "@/assets/prado-white.jpg";          // Toyota Land Cruiser Prado
 
 const slides = [
   { image: coasterFront, alt: "Toyota Coaster Bus" },
-  { image: quantumSide, alt: "Toyota Quantum" },
+  { image: vellfileSilver, alt: "Toyota Vellfire" },
   { image: vanguardWhite, alt: "Toyota Vanguard" },
   { image: pajeroSilver, alt: "Mitsubishi Pajero" },
   { image: fortunerSilver, alt: "Toyota Fortuner" },
+  { image: lexusLx, alt: "Lexus LX" },
+  { image: pradoWhite, alt: "Toyota Land Cruiser Prado" },
+  { image: hiluxWhite, alt: "Toyota Hilux" },
   { image: hondaFitBlue, alt: "Honda Fit" },
   { image: mercedesWedding, alt: "Wedding Mercedes Sedans" },
 ];
