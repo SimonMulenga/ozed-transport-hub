@@ -14,8 +14,9 @@ import quantumFront from "@/assets/quantum-front.jpg";
 // Toyota Vanguard (white SUV)
 import vanguardWhite from "@/assets/vanguard-white.jpg";
 
-// Mitsubishi Pajero (silver SUV)
-import pajeroReal from "@/assets/pajero-real.jpg";
+// Mitsubishi Pajero (verified Pajero photos)
+import pajeroSilver from "@/assets/pajero-silver.jpg";
+import pajeroBlack from "@/assets/pajero-black.jpg";
 
 // Toyota Fortuner (silver SUV)
 import fortunerSilver from "@/assets/fortuner-silver.jpg";
@@ -97,8 +98,8 @@ const vehicles: Vehicle[] = [
   {
     name: "Mitsubishi Pajero",
     category: "SUV",
-    images: [pajeroReal],
-    captions: ["Silver Pajero"],
+    images: [pajeroSilver, pajeroBlack],
+    captions: ["Silver Pajero", "Black Pajero"],
     desc: "Executive 4×4 experience. Luxury, power, and command on the road for VIP transfers and corporate travel.",
     prices: [
       { label: "Within Lusaka", price: "K2,000", perDay: true },
