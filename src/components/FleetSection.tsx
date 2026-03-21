@@ -7,9 +7,9 @@ import coasterFront from "@/assets/coaster-front-2.jpg";
 import coasterFleet from "@/assets/coaster-fleet-2.jpg";
 import coasterInteriorReal from "@/assets/coaster-interior-real.jpg";
 
-// Toyota Quantum (actual Quantum van images)
-import quantumSide from "@/assets/quantum-real.jpg";
-import quantumFront from "@/assets/quantum-front.jpg";
+// Toyota Vellfire (replaces Quantum)
+import vellfileSilver from "@/assets/vellfire-silver.jpg";
+import vellfireBlack from "@/assets/vellfire-black.jpg";
 
 // Toyota Vanguard (white SUV)
 import vanguardWhite from "@/assets/vanguard-white.jpg";
@@ -21,8 +21,8 @@ import pajeroBlack from "@/assets/pajero-black.jpg";
 // Toyota Fortuner (silver SUV)
 import fortunerSilver from "@/assets/fortuner-silver.jpg";
 
-// GWM P300 Pickup
-import gwmP300 from "@/assets/gwm-p300.png";
+// Toyota Hilux (replaces GWM P300)
+import hiluxWhite from "@/assets/hilux-white.jpg";
 
 // Honda Fit (blue hatchback)
 import hondaFitBlue from "@/assets/honda-fit-blue.jpg";
@@ -32,11 +32,18 @@ import hondaFitDashboard from "@/assets/honda-fit-dashboard-real.jpg";
 
 // Wedding Mercedes (3 white Mercedes sedans)
 import mercedesWedding from "@/assets/mercedes-wedding-real.jpg";
+import weddingLineup from "@/assets/wedding-lineup.jpg";
+
+// New vehicles
+import lexusLx from "@/assets/lexus-lx.jpg";
+import pradoWhite from "@/assets/prado-white.jpg";
+import markXWhite from "@/assets/mark-x-white.jpg";
+import vitzBlue from "@/assets/vitz-blue.jpg";
 
 // Logo
 import logoNew from "@/assets/logo-new.jpg";
 
-type VehicleCategory = "All" | "Bus" | "SUV" | "Sedan" | "Economy" | "Pickup";
+type VehicleCategory = "All" | "Bus" | "SUV" | "Sedan" | "Economy" | "Pickup" | "Van";
 
 interface Vehicle {
   name: string;
@@ -67,18 +74,18 @@ const vehicles: Vehicle[] = [
     bookingName: "Toyota Coaster Bus",
   },
   {
-    name: "Toyota Quantum",
-    category: "Bus",
-    images: [quantumSide, quantumFront],
-    captions: ["Side View", "Front View"],
-    desc: "Ideal for medium groups — airport transfers, team transport, and family trips.",
+    name: "Toyota Vellfire",
+    category: "Van",
+    images: [vellfileSilver, vellfireBlack],
+    captions: ["Silver Vellfire", "Black Vellfire"],
+    desc: "Premium luxury van for VIP transfers, airport shuttles, and executive group travel.",
     prices: [
       { label: "Within Lusaka", price: "K2,500", perDay: true },
       { label: "Outside Lusaka", price: "K3,000", perDay: true },
     ],
-    features: ["Air Conditioned", "Comfortable Seating", "Fuel Efficient", "Professional Driver"],
-    capacity: "14 Passengers",
-    bookingName: "Toyota Quantum",
+    features: ["Luxury Interior", "Air Conditioned", "Comfortable Seating", "Professional Driver"],
+    capacity: "7 Passengers",
+    bookingName: "Toyota Vellfire",
     mostBooked: true,
   },
   {
@@ -126,18 +133,18 @@ const vehicles: Vehicle[] = [
     mostBooked: true,
   },
   {
-    name: "GWM P300",
+    name: "Toyota Hilux",
     category: "Pickup",
-    images: [gwmP300],
+    images: [hiluxWhite],
     captions: ["Exterior"],
-    desc: "Power. Presence. Performance. Perfect for executive travel, site visits, and long distance trips.",
+    desc: "Tough, reliable pickup. Perfect for site visits, cargo transport, and long distance trips.",
     prices: [
       { label: "Local (Lusaka)", price: "K2,500", perDay: true },
       { label: "Outside Lusaka", price: "K3,500", perDay: true },
     ],
     features: ["4x4 Power", "Air Conditioned", "Professional Driver", "Flexible Bookings"],
-    capacity: "4 Passengers",
-    bookingName: "GWM P300",
+    capacity: "5 Passengers",
+    bookingName: "Toyota Hilux",
   },
   {
     name: "Honda Fit",
@@ -155,8 +162,8 @@ const vehicles: Vehicle[] = [
   {
     name: "Wedding Sedans (Mercedes)",
     category: "Sedan",
-    images: [mercedesWedding],
-    captions: ["3x Mercedes-Benz C-Class"],
+    images: [mercedesWedding, weddingLineup],
+    captions: ["Mercedes-Benz C-Class", "Wedding Lineup"],
     desc: "Arrive in style. Elegant Mercedes-Benz sedans for bridal teams, VIP guests, and photo sessions.",
     prices: [
       { label: "Per Vehicle", price: "K2,500", perDay: false },
@@ -166,9 +173,65 @@ const vehicles: Vehicle[] = [
     capacity: "4 per vehicle",
     bookingName: "Luxury Wedding Sedan",
   },
+  {
+    name: "Lexus LX",
+    category: "SUV",
+    images: [lexusLx],
+    captions: ["Exterior"],
+    desc: "Ultimate luxury SUV. Prestige, power, and comfort for VIP transport and high-end corporate travel.",
+    prices: [
+      { label: "Within Lusaka", price: "K3,000", perDay: true },
+      { label: "Outside Lusaka", price: "K4,000", perDay: true },
+    ],
+    features: ["Premium Luxury", "V8 Power", "Executive Comfort", "Professional Chauffeur"],
+    capacity: "5 Passengers",
+    bookingName: "Lexus LX",
+    mostBooked: true,
+  },
+  {
+    name: "Toyota Land Cruiser Prado",
+    category: "SUV",
+    images: [pradoWhite],
+    captions: ["Exterior"],
+    desc: "Commanding presence on the road. Built for executive travel, long distances, and all-terrain confidence.",
+    prices: [
+      { label: "Within Lusaka", price: "K2,500", perDay: true },
+      { label: "Outside Lusaka", price: "K3,500", perDay: true },
+    ],
+    features: ["4x4 Capable", "Spacious Interior", "Executive Class", "Professional Driver"],
+    capacity: "7 Passengers",
+    bookingName: "Toyota Land Cruiser Prado",
+  },
+  {
+    name: "Toyota Mark X",
+    category: "Sedan",
+    images: [markXWhite],
+    captions: ["Exterior"],
+    desc: "Sleek executive sedan. Perfect for business travel, airport transfers, and special occasions.",
+    prices: [
+      { label: "Within Lusaka", price: "K1,000", perDay: true },
+      { label: "Outside Lusaka", price: "K1,500", perDay: true },
+    ],
+    features: ["Executive Sedan", "Air Conditioned", "Comfortable Interior", "Professional Driver"],
+    capacity: "4 Passengers",
+    bookingName: "Toyota Mark X",
+  },
+  {
+    name: "Toyota Vitz",
+    category: "Economy",
+    images: [vitzBlue],
+    captions: ["Exterior"],
+    desc: "Compact and economical. Ideal for quick errands, town driving, and budget-friendly trips.",
+    prices: [
+      { label: "Per Day", price: "K500", perDay: true },
+    ],
+    features: ["Fuel Efficient", "Easy Town Driving", "Compact & Nimble", "Min 3 Days Booking"],
+    capacity: "4 Passengers",
+    bookingName: "Toyota Vitz",
+  },
 ];
 
-const categories: VehicleCategory[] = ["All", "Bus", "SUV", "Pickup", "Sedan", "Economy"];
+const categories: VehicleCategory[] = ["All", "Bus", "Van", "SUV", "Pickup", "Sedan", "Economy"];
 
 const ImageGallery = ({ images, captions, name }: { images: string[]; captions: string[]; name: string }) => {
   const [current, setCurrent] = useState(0);
