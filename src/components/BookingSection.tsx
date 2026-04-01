@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { Send } from "lucide-react";
+import { motion } from "framer-motion";
 
 const WHATSAPP_NUMBER = "260772344849";
 
@@ -25,6 +26,11 @@ const SELF_DRIVE_CARS = [
   "Toyota Vellfire / Alphard",
 ];
 
+const RESTRICTED_OUTSIDE_LUSAKA = [
+  "Toyota Vitz",
+  "Honda Fit",
+];
+
 const OUTSIDE_LUSAKA_LOCATIONS = [
   "kitwe",
   "ndola",
@@ -46,7 +52,7 @@ const BookingSection = () => {
     vehicle: "",
     passengers: "",
     isOutsideLusaka: false,
-    isSelfDrive: false,
+    isSelfDrive: null as boolean | null,
   });
 
   const set = (key: string, value: any) =>
@@ -54,10 +60,8 @@ const BookingSection = () => {
 
   const today = new Date().toISOString().split("T")[0];
 
-  /* 🔥 AUTO DETECT OUTSIDE LUSAKA */
   useEffect(() => {
     const dest = form.destination.toLowerCase();
-
     const isOutside = OUTSIDE_LUSAKA_LOCATIONS.some((place) =>
       dest.includes(place)
     );
@@ -67,35 +71,34 @@ const BookingSection = () => {
     }
   }, [form.destination]);
 
-  /* 🔥 VEHICLE SELECTION LOGIC */
   const handleVehicleChange = (value: string) => {
-    const isSelfDriveCar = SELF_DRIVE_CARS.includes(value);
-
-    if (isSelfDriveCar) {
-      set("isSelfDrive", true);
-
-      alert(
-        "This vehicle requires a minimum of 3 days for self-drive booking."
-      );
-    } else {
-      set("isSelfDrive", false);
+    if (
+      form.isOutsideLusaka &&
+      RESTRICTED_OUTSIDE_LUSAKA.includes(value)
+    ) {
+      alert(`${value} is not allowed for trips outside Lusaka.`);
+      set("vehicle", "");
+      return;
     }
 
     set("vehicle", value);
+
+    if (SELF_DRIVE_CARS.includes(value)) {
+      set("isSelfDrive", null);
+    } else {
+      set("isSelfDrive", false);
+    }
   };
 
-  /* 💰 CALCULATION */
   const calculation = useMemo(() => {
     if (!form.pickupDate || !form.returnDate || !form.vehicle) return null;
 
     const start = new Date(form.pickupDate);
     const end = new Date(form.returnDate);
-
     if (end < start) return null;
 
-    const diffTime = end.getTime() - start.getTime();
     const totalDates =
-      Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+      Math.floor((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
 
     const vehicle = VEHICLES.find((v) => v.name === form.vehicle);
     if (!vehicle) return null;
@@ -104,12 +107,9 @@ const BookingSection = () => {
       ? vehicle.outsidePrice
       : vehicle.localPrice;
 
-    // 🔥 SELF DRIVE
-    if (form.isSelfDrive) {
+    if (form.isSelfDrive === true) {
       const chargedDays = Math.max(totalDates - 1, 3);
-
       return {
-        totalDates,
         chargedDays,
         total: pricePerDay * chargedDays,
         warning: totalDates - 1 < 3,
@@ -118,12 +118,10 @@ const BookingSection = () => {
       };
     }
 
-    // 🔥 NON SELF DRIVE
     let minDays = form.isOutsideLusaka ? 2 : 1;
     const chargedDays = totalDates < minDays ? minDays : totalDates;
 
     return {
-      totalDates,
       chargedDays,
       total: pricePerDay * chargedDays,
       warning: totalDates < minDays,
@@ -132,7 +130,6 @@ const BookingSection = () => {
     };
   }, [form]);
 
-  /* 📩 WHATSAPP MESSAGE */
   const message = useMemo(() => {
     return `Hello, I would like to book a vehicle:
 
@@ -141,10 +138,11 @@ Pickup Location: ${form.pickup || "-"}
 Destination: ${form.destination || "-"}
 Pickup Date: ${form.pickupDate || "-"}
 Return Date: ${form.returnDate || "-"}
-Total Days: ${calculation?.chargedDays || "-"} ${
-      calculation?.chargedDays > 1 ? "days" : "day"
-    }
+Total Days: ${calculation?.chargedDays || "-"}
 Passengers: ${form.passengers || "-"}
+Service Type: ${
+      form.isSelfDrive === true ? "Self Drive" : "With Driver"
+    }
 Estimated Price: ${
       calculation ? "K" + calculation.total.toLocaleString() : "-"
     }
@@ -157,6 +155,11 @@ Please confirm availability.`;
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+
+    if (form.isSelfDrive === null && SELF_DRIVE_CARS.includes(form.vehicle)) {
+      alert("Please select Self Drive or With Driver.");
+      return;
+    }
 
     if (calculation?.blocked) {
       alert("Minimum booking for self-drive is 3 days.");
@@ -217,19 +220,53 @@ Please confirm availability.`;
             ))}
           </select>
 
+          {/* 🔥 PREMIUM BUTTON CARDS */}
+          {form.vehicle && SELF_DRIVE_CARS.includes(form.vehicle) && (
+            <div className="grid grid-cols-2 gap-3">
+              
+              {/* SELF DRIVE */}
+              <motion.button
+                type="button"
+                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.03 }}
+                onClick={() => set("isSelfDrive", true)}
+                className={`p-4 rounded-xl border text-center relative ${
+                  form.isSelfDrive === true
+                    ? "bg-primary text-white"
+                    : "bg-muted"
+                }`}
+              >
+                🚗
+                <p className="font-semibold">Self Drive</p>
+              </motion.button>
+
+              {/* CHAUFFEUR */}
+              <motion.button
+                type="button"
+                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.03 }}
+                onClick={() => set("isSelfDrive", false)}
+                className={`p-4 rounded-xl border text-center relative ${
+                  form.isSelfDrive === false
+                    ? "bg-primary text-white"
+                    : "bg-muted"
+                }`}
+              >
+                {/* BADGE */}
+                <span className="absolute top-2 right-2 text-xs bg-yellow-400 text-black px-2 py-1 rounded">
+                  Most Popular
+                </span>
+
+                👨‍✈️
+                <p className="font-semibold">Chauffeur</p>
+              </motion.button>
+
+            </div>
+          )}
+
           <input type="number" className={inputClass} placeholder="Passengers"
             value={form.passengers}
             onChange={(e) => set("passengers", e.target.value)} />
-
-          <label className="flex gap-2 items-center">
-            <input type="checkbox" checked={form.isOutsideLusaka} readOnly />
-            Outside Lusaka (Auto)
-          </label>
-
-          <label className="flex gap-2 items-center">
-            <input type="checkbox" checked={form.isSelfDrive} readOnly />
-            Self Drive (Auto)
-          </label>
 
           {calculation?.warning && (
             <p className="text-red-500 text-sm text-center">
