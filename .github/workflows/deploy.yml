@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - main
+      - master
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -22,19 +23,33 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          bun-version: latest
+          node-version: 20
+          cache: npm
 
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        run: npm ci
 
       - name: Build site
-        run: bun run build
+        run: npm run build
 
       - name: Add SPA fallback
         run: cp dist/index.html dist/404.html
+
+      - name: Add GitHub Pages files
+        run: |
+          touch dist/.nojekyll
+          cp public/CNAME dist/CNAME
+
+      - name: Publish built site to gh-pages branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
+          force_orphan: true
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
